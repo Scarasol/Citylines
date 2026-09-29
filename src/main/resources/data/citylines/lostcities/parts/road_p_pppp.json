@@ -1,0 +1,25 @@
+{
+  "xsize": 16,
+  "zsize": 16,
+  "refpalette": "citylines:street",
+  "slices": [
+    [
+      "FKPPPPPCCPPPPPKF",
+      "KKPPPPPCCPPPPPKK",
+      "PPPPPPPPPPPPPPPP",
+      "PPPPPPPPPPPPPPPP",
+      "PPPPPPPPPPPPPPPP",
+      "PPPPPPPPPPPPPPPP",
+      "PPPPPPPPPPPPPPPP",
+      "CCPPPPPPPPPPPPCC",
+      "CCPPPPPPPPPPPPCC",
+      "PPPPPPPPPPPPPPPP",
+      "PPPPPPPPPPPPPPPP",
+      "PPPPPPPPPPPPPPPP",
+      "PPPPPPPPPPPPPPPP",
+      "PPPPPPPPPPPPPPPP",
+      "KKPPPPPCCPPPPPKK",
+      "FKPPPPPCCPPPPPKF"
+    ]
+  ]
+}

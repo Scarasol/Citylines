@@ -1,0 +1,29 @@
+{
+  "palette": [
+    {
+      "char": "?",
+      "block": "minecraft:gray_concrete",
+      "damaged": "minecraft:andesite"
+    },
+    {
+      "char": "'",
+      "block": "minecraft:smooth_stone",
+      "damaged": "minecraft:andesite"
+    },
+    {
+      "char": ",",
+      "block": "minecraft:white_concrete",
+      "damaged": "minecraft:andesite"
+    },
+    {
+      "char": "<",
+      "block": "minecraft:light_gray_concrete",
+      "damaged": "minecraft:andesite"
+    },
+    {
+      "char": ">",
+      "block": "minecraft:polished_andesite",
+      "damaged": "minecraft:andesite"
+    }
+  ]
+}

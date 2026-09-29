@@ -1,0 +1,28 @@
+{
+  "palette": [
+    {
+      "char": "P",
+      "block": "minecraft:gray_concrete"
+    },
+    {
+      "char": "R",
+      "block": "minecraft:smooth_stone"
+    },
+    {
+      "char": "C",
+      "block": "minecraft:white_concrete"
+    },
+    {
+      "char": "F",
+      "block": "minecraft:light_gray_concrete"
+    },
+    {
+      "char": "K",
+      "block": "minecraft:polished_andesite"
+    },
+    {
+      "char": "b",
+      "block": "minecraft:structure_void"
+    }
+  ]
+}

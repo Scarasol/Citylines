@@ -1,0 +1,12 @@
+{
+  "style": "citylines:standard",
+  "inherit": "lostcities:citystyle_common",
+  "selectors": {
+    "largebridges": [
+      {
+        "factor": 1.0,
+        "value": "citylines:bridge_deck"
+      }
+    ]
+  }
+}

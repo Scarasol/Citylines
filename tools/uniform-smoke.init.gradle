@@ -1,0 +1,67 @@
+// Isolated local smoke run. No run/ configuration or existing world is changed.
+allprojects { p ->
+    afterEvaluate {
+        if (!p.plugins.hasPlugin('net.minecraftforge.gradle')) return
+        def compat = p.findProperty('uniformSmokeCompat') == 'true'
+        def enabled = p.findProperty('uniformSmokeEnabled') != 'false'
+        def debug = p.findProperty('uniformSmokeDebug') != 'false'
+        def label = p.findProperty('uniformSmokeRun') ?: (compat ? 'compat' : 'tlc')
+        if (!(label ==~ /[a-zA-Z0-9-]+/)) throw new GradleException('Invalid smoke-run label')
+        def smoke = p.file('build/uniform-smoke/' + label)
+        if (!compat) {
+            def optional = p.configurations.implementation.dependencies.findAll {
+                it.name.startsWith('lc2h-') || it.name == 'extractioncities'
+            }.toList()
+            optional.each {
+                p.configurations.implementation.dependencies.remove(it)
+                p.configurations.compileOnly.dependencies.add(it)
+            }
+            p.configurations.runtimeOnly.dependencies.removeAll { it.name.startsWith('quantified-api-') }
+        }
+        p.minecraft.runs.server {
+            workingDirectory smoke
+            property 'forge.logging.console.level', 'info'
+            property 'mixin.debug.countInjections', 'true'
+            jvmArgs '-Xms1G', '-Xmx3G'
+        }
+        if (p.findProperty('uniformSmokeClient') == 'true') {
+            p.minecraft.runs.client {
+                workingDirectory smoke
+                property 'forge.logging.console.level', 'info'
+                property 'mixin.debug.countInjections', 'true'
+                jvmArgs '-Xms1G', '-Xmx3G'
+            }
+        }
+        def prepare = p.tasks.register('prepareUniformSmoke') {
+            doLast {
+                new File(smoke, 'config/lostcities').mkdirs()
+                def acceptance = p.file('run/eula.txt')
+                if (!acceptance.exists() || !acceptance.text.contains('eula=true')) {
+                    throw new GradleException('This smoke run requires the existing run/eula.txt acceptance')
+                }
+                p.copy { from acceptance; into smoke }
+                new File(smoke, 'server.properties').text = '''server-ip=127.0.0.1
+server-port=25577
+enable-rcon=true
+rcon.port=25578
+rcon.password=citylines-local-smoke
+online-mode=false
+level-name=world
+level-seed=8218742260916520910
+view-distance=2
+simulation-distance=2
+max-tick-time=180000
+'''
+                new File(smoke, 'config/citylines-common.toml').text = "enabled=${enabled}\ndebugLogging=${debug}\n"
+                new File(smoke, 'config/lostcities/common.toml').text = '''[profiles]
+dimensionsWithProfiles=["minecraft:overworld=onlycities"]
+optimizedHeightmap=false
+heightSampleSize=3
+'''
+            }
+        }
+        p.tasks.configureEach { task ->
+            if (task.name == 'runServer') task.dependsOn(prepare)
+        }
+    }
+}
